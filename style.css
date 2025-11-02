@@ -6,10 +6,28 @@
 }
 
 /* Base page styles */
+:root{
+  /* NASA Web Design System palette (selected tokens) */
+  --color-primary: #105bd8; /* primary blue */
+  --color-primary-darker: #0b3d91; /* darker blue */
+  --color-primary-darkest: #061f4a; /* darkest blue */
+  --color-base: #212121; /* neutral base */
+  --color-gray-dark: #323a45;
+  --color-gray-light: #aeb0b5;
+  --color-gray-lightest: #f1f1f1;
+  --color-white: #ffffff;
+  --color-primary-alt: #02bfe7; /* accent */
+  --color-primary-alt-lightest: #e1f3f8;
+  --color-secondary: #dd361c; /* red accent */
+  --color-gold: #ff9d1e;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f1f1f1;
+  font-family: 'Public Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  /* subtle vertical gradient using NASA WDS light accent into the neutral light background */
+  background: linear-gradient(180deg, var(--color-primary-alt-lightest) 0%, var(--color-gray-lightest) 60%);
   padding: 20px;
+  color: var(--color-base);
 }
 
 /* Centered container */
@@ -28,10 +46,12 @@ body {
   margin-bottom: 20px;
 }
 
+/* NASA-inspired color for headings */
 h1 {
-  font-family: Verdana, sans-serif;
-  font-weight: bold;
-  color: #212121;
+  font-family: 'Inter', 'Public Sans', Verdana, sans-serif;
+  font-weight: 700;
+  color: var(--color-primary-darker);
+  letter-spacing: 0.4px;
 }
 
 /* Logo */
@@ -66,12 +86,13 @@ button {
 
 /* Button specific */
 button {
-  background-color: #d3d3d3;
-  color: black;
+  background-color: var(--color-primary);
+  color: var(--color-white);
   cursor: pointer;
+  border: none;
 }
 button:hover {
-  background-color: #bfbfbf;
+  background-color: var(--color-primary-darkest);
 }
 
 /* Stack horizontally on wider screens */
@@ -96,18 +117,43 @@ button:hover {
   justify-content: center;
 }
 
+/* Give the gallery area a gentle NASA-tinted background so cards "float" on it */
+.gallery {
+  background: transparent; /* keep transparent by default */
+}
+
+/* Wrapper to visually separate the gallery from page background */
+.gallery-wrapper {
+  /* stronger, more saturated NASA-tinted background */
+  background: linear-gradient(180deg, rgba(2,191,231,0.12), rgba(16,91,216,0.06));
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(16,91,216,0.06);
+  box-shadow: 0 6px 18px rgba(16,91,216,0.04);
+}
+
+/* When a card is clicked, make all cards use the same night-sky color */
+.gallery-wrapper.uniform .gallery-item {
+  background: linear-gradient(180deg, var(--color-primary-darkest), var(--color-primary-darker));
+  box-shadow: 0 8px 24px rgba(4,18,53,0.5);
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
 /* Gallery items */
 .gallery-item {
   flex: 1 1 100%;  /* full width by default */
   min-width: 280px;
   max-width: 500px;
-  background: white;
+  /* Night-sky card: dark navy gradient using WDS tokens */
+  background: linear-gradient(180deg, rgba(6,31,74,0.98), rgba(11,61,145,0.95));
   padding: 10px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 18px rgba(2,13,46,0.45);
+  color: var(--color-gray-lightest);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  border: 1px solid rgba(255,255,255,0.04);
 }
 
 /* Three columns on wider screens */
@@ -122,6 +168,30 @@ button:hover {
   height: 200px;
   object-fit: cover;
   border-radius: 4px;
+  background: #000; /* ensure image area reads as dark while loading */
+}
+
+/* Hover zoom effect (extra credit) */
+.gallery-item .media-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+.gallery-item img {
+  transition: transform 300ms ease;
+}
+.gallery-item:hover img {
+  transform: scale(1.06);
+}
+
+.video-badge {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-weight: bold;
 }
 
 .gallery-item p {
@@ -129,6 +199,13 @@ button:hover {
   padding: 5px;
   font-size: 14px;
 }
+
+/* Caption styles for night cards */
+.caption { padding: 8px 6px; }
+.caption .item-title { color: var(--color-white); font-size: 16px; margin: 0; }
+.caption .item-date { color: rgba(225,243,248,0.9); margin: 6px 0 0 0; font-size: 13px; }
+
+.placeholder { color: rgba(255,255,255,0.9); }
 
 /* Placeholder content */
 .placeholder {
@@ -142,3 +219,89 @@ button:hover {
   font-size: 48px;
   margin-bottom: 20px;
 }
+
+/* Random fact */
+.random-fact {
+  background: var(--color-white);
+  padding: 12px 18px;
+  margin: 0 20px 18px 20px;
+  border-radius: 6px;
+  color: var(--color-primary-darker);
+  box-shadow: 0 2px 6px rgba(11,61,145,0.06);
+  font-size: 16px;
+  border-left: 4px solid var(--color-primary-alt);
+}
+
+/* Modal styles */
+.modal { display: none; }
+.modal.open { display: block; position: fixed; inset: 0; z-index: 1000; }
+.modal-backdrop { position: fixed; inset: 0; background: rgba(3,6,20,0.6); z-index: 1000; }
+.modal-content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(900px, 95%);
+  max-height: 90vh;
+  overflow: auto;
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.4);
+  z-index: 1001; /* ensure modal content sits above the backdrop */
+}
+.modal-close {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: rgba(255,255,255,0.95);
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  z-index: 1002; /* keep the close button above iframe/video */
+}
+.modal-media img { width: 100%; max-height: 60vh; border-radius: 6px; display: block; }
+
+/* Responsive embed container for videos (16:9) */
+.embed-container {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+}
+.embed-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  border: 0;
+  z-index: 1; /* ensure iframe doesn't cover close button */
+}
+.modal-title { margin-top: 12px; color: #0b3d91; }
+.modal-date { color: #444; margin-bottom: 8px; }
+.modal-explanation { white-space: pre-wrap; line-height: 1.5; }
+
+/* Night mode for modal to match card color when opened */
+.modal-content.modal-night {
+  background: linear-gradient(180deg, rgba(6,31,74,0.98), rgba(11,61,145,0.95));
+  color: var(--color-gray-lightest);
+}
+.modal-content.modal-night .modal-title { color: var(--color-white); }
+.modal-content.modal-night .modal-date { color: rgba(225,243,248,0.9); }
+.modal-content.modal-night .modal-explanation { color: rgba(225,243,248,0.95); }
+.modal-content.modal-night .modal-close {
+  background: rgba(0,0,0,0.5);
+  color: var(--color-white);
+}
+
+/* Prevent background scroll when modal is open */
+body.modal-open {
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* Ensure embed container stays beneath the close button */
+.embed-container { z-index: 1; }

@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NASA Space Explorer</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <!-- NASA-recommended web fonts (Inter for UI, Public Sans for body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
@@ -17,10 +19,27 @@
       <button id="getImageBtn">Fetch Space Images</button>
     </div>
 
-    <div id="gallery" class="gallery">
-      <div class="placeholder">
-        <div class="placeholder-icon">🔭</div>
-        <p>Click "Fetch Space Images" to explore the cosmos!</p>
+    <!-- Random fact shown each load -->
+    <section id="randomFact" class="random-fact" aria-live="polite"></section>
+
+    <div class="gallery-wrapper">
+      <div id="gallery" class="gallery">
+        <div class="placeholder">
+          <div class="placeholder-icon">🔭</div>
+          <p>Click "Fetch Space Images" to explore the cosmos!</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Modal for detail view -->
+    <div id="modal" class="modal" aria-hidden="true">
+      <div class="modal-backdrop" id="modalBackdrop"></div>
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button id="modalClose" class="modal-close" aria-label="Close details">✕</button>
+        <div id="modalMedia" class="modal-media"></div>
+        <h2 id="modalTitle" class="modal-title"></h2>
+        <p id="modalDate" class="modal-date"></p>
+        <div id="modalExplanation" class="modal-explanation"></div>
       </div>
     </div>
   </div>
